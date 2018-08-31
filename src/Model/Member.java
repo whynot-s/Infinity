@@ -1,6 +1,7 @@
 package Model;
 
 import DBtools.DButil;
+import org.json.JSONObject;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -56,6 +57,15 @@ public class Member {
 
     public int getMemberId(){
         return MemberId;
+    }
+
+    public JSONObject toJSON(){
+        JSONObject member = new JSONObject();
+        member.put("MemberId", MemberId);
+        member.put("Name", Name);
+        member.put("Gender", Gender);
+        member.put("Point", Point);
+        return member;
     }
 
 }

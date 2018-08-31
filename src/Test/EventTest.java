@@ -5,6 +5,9 @@ import Model.Member;
 import org.junit.Test;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 
@@ -25,10 +28,16 @@ public class EventTest {
             for(int i = 0; i < allMembers.size(); i+=2) chosen += String.format("%d,", allMembers.get(i).getMemberId());
             chosen = chosen.substring(0, chosen.length() - 1) + ")";
             event.addMembers(chosen);
-            event.createEvent();
+            String code = event.createEvent();
+            System.out.println(code);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void timeTest(){
+        System.out.println(LocalDateTime.now(ZoneId.of("Europe/London")).toString());
     }
 
 }

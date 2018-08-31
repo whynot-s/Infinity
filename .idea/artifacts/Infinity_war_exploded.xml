@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Infinity:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Infinity_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Infinity" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql-connector-java-8.0.11" />
+          <element id="library" level="module" name="JUnit4" module-name="Infinity" />
+          <element id="library" level="project" name="json-20140107" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="Infinity/web/Web" />
+    </root>
+  </artifact>
+</component>
