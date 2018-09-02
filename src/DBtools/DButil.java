@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DButil {
-    private static String url="jdbc:mysql://localhost:3306/Infinity?useUnicode=true&characterEncoding=gb2312";
+    private static String url="jdbc:mysql://localhost:3306/Infinity?useUnicode=true";
     private static String driverClass="com.mysql.jdbc.Driver";
     private static String username = "root";
     private static String password = "zxbl1111";

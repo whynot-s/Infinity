@@ -1,14 +1,23 @@
 package Test;
 
+import DBtools.MongoDButil;
 import Model.Event;
 import Model.Member;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import org.bson.BsonDocument;
+import org.bson.BsonValue;
+import org.bson.Document;
 import org.junit.Test;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+
 
 
 public class EventTest {
@@ -38,6 +47,16 @@ public class EventTest {
     @Test
     public void timeTest(){
         System.out.println(LocalDateTime.now(ZoneId.of("Europe/London")).toString());
+    }
+
+    @Test
+    public void MongoDBTest(){
+        MongoDatabase mongoDatabase = MongoDButil.getDatabase();
+        MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("MemberQueue");
+        FindIterable<Document> findIterable = mongoCollection.find(new BasicDBObject("EventId",1)).sort(new BasicDBObject("TimeStamp",1)).limit(1);
+        MongoCursor<Document> mongoCursor = findIterable.iterator();
+        while(mongoCursor.hasNext())
+            System.out.println(mongoCursor.next());
     }
 
 }

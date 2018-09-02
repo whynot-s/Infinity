@@ -17,7 +17,8 @@ public class SaveGame extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            DBGame.saveGame(Integer.parseInt(request.getParameter("eventId")),
+            DBGame.saveGame(
+                    Integer.parseInt(request.getParameter("eventId")),
                     Integer.parseInt(request.getParameter("courtId")),
                     Integer.parseInt(request.getParameter("playerA1")),
                     Integer.parseInt(request.getParameter("playerA2")),
@@ -27,7 +28,7 @@ public class SaveGame extends HttpServlet {
             out.println(e.toString());
         }
         out.flush();
-        out.println();
+        out.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

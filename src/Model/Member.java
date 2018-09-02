@@ -44,7 +44,8 @@ public class Member {
     public static void loadMembers(ArrayList<Member> members, String condition) throws SQLException {
         Connection conn = DButil.getConnection();
         Statement stmt = conn.createStatement();
-        if(!condition.equals("")) condition = " WHERE playerId in " + condition;
+        if(condition.startsWith("(")) condition = " WHERE playerId in " + condition;
+        else if(!condition.equals("")) condition = String.format(" WHERE UPPER(name) LIKE \'%%%s%%\'", condition.toUpperCase());
         ResultSet resultSet = stmt.executeQuery("SELECT * FROM Member" + condition);
         while (resultSet.next())
             members.add(new Member(
