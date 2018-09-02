@@ -3,13 +3,14 @@ package Test;
 import DBtools.MongoDButil;
 import Model.Event;
 import Model.Member;
+
+import Model.Snapshot;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import org.bson.BsonDocument;
-import org.bson.BsonValue;
+
 import org.bson.Document;
 import org.junit.Test;
 
@@ -34,7 +35,7 @@ public class EventTest {
             Member.createMembers(newMembers);
             allMembers.addAll(newMembers);
             String chosen = "(";
-            for(int i = 0; i < allMembers.size(); i+=2) chosen += String.format("%d,", allMembers.get(i).getMemberId());
+            for(int i = 0; i < allMembers.size(); i++) chosen += String.format("%d,", allMembers.get(i).getMemberId());
             chosen = chosen.substring(0, chosen.length() - 1) + ")";
             event.addMembers(chosen);
             String code = event.createEvent();
@@ -56,7 +57,7 @@ public class EventTest {
         FindIterable<Document> findIterable = mongoCollection.find(new BasicDBObject("EventId",1)).sort(new BasicDBObject("TimeStamp",1)).limit(1);
         MongoCursor<Document> mongoCursor = findIterable.iterator();
         while(mongoCursor.hasNext())
-            System.out.println(mongoCursor.next());
+            System.out.println(mongoCursor.next().toJson());
     }
 
 }

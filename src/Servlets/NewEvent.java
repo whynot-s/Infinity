@@ -1,6 +1,7 @@
 package Servlets;
 
 import Model.Event;
+import Model.Snapshot;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -27,10 +28,11 @@ public class NewEvent extends HttpServlet {
             String code = event.createEvent();
             out.println(code);
         } catch (SQLException e) {
-            out.println(e.toString());
+            e.printStackTrace(out);
         }
         out.flush();
         out.close();
+        new Snapshot(event.getEventId()).initFirstSnapshot(event.FirstSnapShot());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
