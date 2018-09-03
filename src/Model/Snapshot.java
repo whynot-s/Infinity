@@ -28,8 +28,9 @@ public class Snapshot {
 
     public void initFirstSnapshot(Map<String, Document> documentMap){
         MongoDatabase mongoDatabase = MongoDButil.getDatabase();
-        for(Map.Entry<String, Document> documentEntry : documentMap.entrySet())
+        for(Map.Entry<String, Document> documentEntry : documentMap.entrySet()) {
             mongoDatabase.getCollection(documentEntry.getKey()).insertOne(documentEntry.getValue().append("TimeStamp", TimeStamp));
+        }
     }
 
     public JSONObject loadAll(){

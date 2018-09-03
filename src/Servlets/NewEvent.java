@@ -30,9 +30,9 @@ public class NewEvent extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace(out);
         }
+        new Snapshot(event.getEventId()).initFirstSnapshot(event.FirstSnapShot());
         out.flush();
         out.close();
-        new Snapshot(event.getEventId()).initFirstSnapshot(event.FirstSnapShot());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

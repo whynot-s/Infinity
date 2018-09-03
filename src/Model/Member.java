@@ -60,6 +60,12 @@ public class Member {
         return MemberId;
     }
 
+    public String getName() { return Name; }
+
+    public String getGender() { return Gender; }
+
+    public Double getPoint() { return Point; }
+
     public JSONObject toJSON(){
         JSONObject member = new JSONObject();
         member.put("MemberId", MemberId);

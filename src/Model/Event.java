@@ -50,34 +50,50 @@ public class Event {
 
     public Map<String, Document> FirstSnapShot(){
         Map<String, Document> snapshot = new HashMap<>();
+        Document sample = MemberAttrs.defaultDoc();
         //MemberQueue
-        Document MemberQueue = new Document().append("EventId", EventId);
-        List<Document> members = new ArrayList<>();
+        Document MemberQueue = new Document().append("EventId", EventId).append("Total", Players.size());
+        Document members = new Document();
         for(int i = 0; i < Players.size(); i++) {
-            Document member = new Document();
-            member.put("memberId", Players.get(i).getMemberId());
-            member.put("rank", i + 1);
-            member.put("status", 5);
-            members.add(member);
+            sample.put(MemberAttrs.MEMBERID.getField(), Players.get(i).getMemberId());
+            sample.put(MemberAttrs.NAME.getField(), Players.get(i).getName());
+            sample.put(MemberAttrs.GENDER.getField(), Players.get(i).getGender());
+            sample.put(MemberAttrs.POINT.getField(), Players.get(i).getPoint());
+            sample.put(MemberAttrs.STATUS.getField(), 9);
+            sample.put(MemberAttrs.RANK.getField(), i + 1);
+            members.put(String.format("M%d", Players.get(i).getMemberId()), sample);
+            sample = MemberAttrs.defaultDoc();
         }
         MemberQueue.put("Queue", members);
         snapshot.put("MemberQueue", MemberQueue);
         //Upcoming
         Document Upcoming = new Document().append("EventId", EventId);
-        List<Document> courts = new ArrayList<>();
+        Document courts = new Document();
         for(int i = 0; i < CourtNum; i++){
             Document court = new Document();
-            court.put("A1", new Document());
-            court.put("A2", new Document());
-            court.put("B1", new Document());
-            court.put("B2", new Document());
-            court.put("CourtId", i + 1);
-            courts.add(court);
+            court.put("A1", sample);
+            court.put("A2", sample);
+            court.put("B1", sample);
+            court.put("B2", sample);
+            court.put("courtId", i + 1);
+            courts.put(String.format("U%d", i + 1), court);
         }
         Upcoming.put("UpCourts", courts);
         snapshot.put("Upcoming", Upcoming);
         //Games
-        snapshot.put("Games", new Document().append("EventId", EventId).append("OnCourts", courts));
+        Document Games = new Document().append("EventId", EventId);
+        courts = new Document();
+        for(int i = 0; i < CourtNum; i++){
+            Document court = new Document();
+            court.put("A1", sample);
+            court.put("A2", sample);
+            court.put("B1", sample);
+            court.put("B2", sample);
+            court.put("courtId", i + 1);
+            courts.put(String.format("G%d", i + 1), court);
+        }
+        Games.put("OnCourts", courts);
+        snapshot.put("Games", Games);
         return snapshot;
     }
 
